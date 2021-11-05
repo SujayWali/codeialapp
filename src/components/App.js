@@ -10,7 +10,10 @@ const Login = () => <div>Login</div>;
 
 const Signup = () => <div>Signup</div>;
 
-const Home = () => <div>Home</div>;
+const Home = (props) => {
+  console.log(props);
+  return <div>Home</div>;
+};
 
 class App extends React.Component {
   componentDidMount() {
