@@ -8,12 +8,11 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { fetchPosts } from '../actions/posts';
-import { Home, Navbar, Page404, Login, Signup } from '.';
+import { Home, Navbar, Page404, Login, Signup, Settings } from '.';
 import jwt_decode from 'jwt-decode';
 import { authenticateUser } from '../actions/auth';
 
 const Logout = () => <div>Log Out</div>;
-const Settings = () => <div>Setting</div>;
 
 const PrivateRoute = (PrivateRouteProps) => {
   const { isLoggedin, path, component: Component } = PrivateRouteProps;
@@ -21,7 +20,18 @@ const PrivateRoute = (PrivateRouteProps) => {
     <Route
       path={path}
       render={(props) => {
-        return isLoggedin ? <Component {...props} /> : <Redirect to="/login" />;
+        return isLoggedin ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: '/login',
+              state: {
+                from: props.location,
+              },
+            }}
+          />
+        );
       }}
     />
   );
