@@ -1,28 +1,37 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   Redirect,
 } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
 import { fetchPosts } from '../actions/posts';
-import { Home, Navbar, Page404, Login, Signup, Settings } from '.';
+import {
+  Home,
+  Navbar,
+  Page404,
+  Login,
+  Signup,
+  Settings,
+  UserProfile,
+} from './';
 import jwt_decode from 'jwt-decode';
 import { authenticateUser } from '../actions/auth';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
-import UserProfile from './UserProfile';
 import { fetchUserFriends } from '../actions/friends';
 
-const Logout = () => <div>Log Out</div>;
+const PrivateRoute = (privateRouteProps) => {
+  const { isLoggedin, path, component: Component } = privateRouteProps;
 
-const PrivateRoute = (PrivateRouteProps) => {
-  const { isLoggedin, path, component: Component } = PrivateRouteProps;
   return (
     <Route
       path={path}
       render={(props) => {
+        console.log('props', props);
+        console.log('isLoggedin', isLoggedin);
         return isLoggedin ? (
           <Component {...props} />
         ) : (
@@ -43,10 +52,12 @@ const PrivateRoute = (PrivateRouteProps) => {
 class App extends React.Component {
   componentDidMount() {
     this.props.dispatch(fetchPosts());
+
     const token = getAuthTokenFromLocalStorage();
 
     if (token) {
       const user = jwt_decode(token);
+
       console.log('user', user);
       this.props.dispatch(
         authenticateUser({
@@ -55,6 +66,7 @@ class App extends React.Component {
           name: user.name,
         })
       );
+
       this.props.dispatch(fetchUserFriends());
     }
   }
@@ -65,7 +77,7 @@ class App extends React.Component {
       <Router>
         <div>
           <Navbar />
-          {/* <PostsList posts={posts} /> */}
+
           <Switch>
             <Route
               exact
@@ -83,7 +95,6 @@ class App extends React.Component {
             />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-            <Route path="/logout" component={Logout} />
             <PrivateRoute
               path="/settings"
               component={Settings}
@@ -106,6 +117,7 @@ function mapStateToProps(state) {
   return {
     posts: state.posts,
     auth: state.auth,
+    friends: state.friends,
   };
 }
 

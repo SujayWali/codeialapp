@@ -9,7 +9,6 @@ import {
   SIGNUP_SUCCESS,
   CLEAR_AUTH_STATE,
   EDIT_USER_SUCCESSFUL,
-  EDIT_USER_FAILED,
 } from './actionTypes';
 import { APIUrls } from '../helpers/urls';
 import { getFormBody, getAuthTokenFromLocalStorage } from '../helpers/utils';
@@ -135,7 +134,7 @@ export function editUserSuccessful(user) {
 
 export function editUserFailed(error) {
   return {
-    type: EDIT_USER_FAILED,
+    type: EDIT_USER_SUCCESSFUL,
     error,
   };
 }
@@ -157,9 +156,9 @@ export function editUser(name, password, confirmPassword, userId) {
         id: userId,
       }),
     })
-      .then((response) => response.json())
+      .then((repsonse) => repsonse.json())
       .then((data) => {
-        console.log('EDIT PROFILE data', data);
+        console.log('EDIT PROFIle data', data);
         if (data.success) {
           dispatch(editUserSuccessful(data.data.user));
 

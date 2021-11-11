@@ -1,10 +1,10 @@
+import {
+  USER_PROFILE_SUCCESS,
+  USER_PROFILE_FAILURE,
+  FETCH_USER_PROFILE,
+} from './actionTypes';
 import { APIUrls } from '../helpers/urls';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
-import {
-  FETCH_USER_PROFILE,
-  USER_PROFILE_FAILURE,
-  USER_PROFILE_SUCCESS,
-} from './actionTypes';
 
 export function startUserProfileFetch() {
   return {
@@ -13,11 +13,17 @@ export function startUserProfileFetch() {
 }
 
 export function userProfileSuccess(user) {
-  return { type: USER_PROFILE_SUCCESS, user };
+  return {
+    type: USER_PROFILE_SUCCESS,
+    user,
+  };
 }
 
-export function userProfileFailure(error) {
-  return { type: USER_PROFILE_FAILURE, error };
+export function userProfileFailed(error) {
+  return {
+    type: USER_PROFILE_FAILURE,
+    error,
+  };
 }
 
 export function fetchUserProfile(userId) {

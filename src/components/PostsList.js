@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import propTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
 class PostsList extends Component {
   render() {
     const { posts } = this.props;
@@ -64,6 +65,7 @@ class PostsList extends Component {
 }
 
 PostsList.propTypes = {
-  posts: propTypes.array.isRequired,
+  posts: PropTypes.array.isRequired,
 };
+
 export default PostsList;

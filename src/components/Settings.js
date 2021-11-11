@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { clearAuthState, editUser } from '../actions/auth';
+import { editUser, clearAuthState } from '../actions/auth';
 
 class Settings extends Component {
   constructor(props) {
@@ -13,9 +13,9 @@ class Settings extends Component {
     };
   }
 
-  handleChange = (feildName, val) => {
+  handleChange = (fieldName, val) => {
     this.setState({
-      [feildName]: val,
+      [fieldName]: val,
     });
   };
 
@@ -40,10 +40,11 @@ class Settings extends Component {
             alt="user-dp"
           />
         </div>
-        {error && <div className="alert error-dialog">{error}</div>}
+
+        {error && <div className="alert error-dailog">{error}</div>}
         {error === false && (
-          <div className="alert success-dialog">
-            Profile Updated Successfully
+          <div className="alert success-dailog">
+            Successfully updated profile!
           </div>
         )}
         <div className="field">
@@ -66,7 +67,8 @@ class Settings extends Component {
 
         {editMode && (
           <div className="field">
-            <div className="field-label">New Password</div>
+            <div className="field-label">New password</div>
+
             <input
               type="password"
               onChange={(e) => this.handleChange('password', e.target.value)}
@@ -77,7 +79,8 @@ class Settings extends Component {
 
         {editMode && (
           <div className="field">
-            <div className="field-label">Confirm Password</div>
+            <div className="field-label">Confirm password</div>
+
             <input
               type="password"
               onChange={(e) =>
@@ -98,7 +101,7 @@ class Settings extends Component {
               className="button edit-btn"
               onClick={() => this.handleChange('editMode', true)}
             >
-              Edit
+              Edit profile
             </button>
           )}
 
@@ -107,7 +110,7 @@ class Settings extends Component {
               className="go-back"
               onClick={() => this.handleChange('editMode', false)}
             >
-              Go Back
+              Go back
             </div>
           )}
         </div>
@@ -121,5 +124,4 @@ function mapStateToProps({ auth }) {
     auth,
   };
 }
-
 export default connect(mapStateToProps)(Settings);

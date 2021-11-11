@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
 import { startSingup, signup, clearAuthState } from '../actions/auth';
 
 class Signup extends Component {
@@ -36,6 +36,7 @@ class Signup extends Component {
 
   render() {
     const { inProgress, error, isLoggedin } = this.props.auth;
+
     if (isLoggedin) {
       return <Redirect to="/" />;
     }

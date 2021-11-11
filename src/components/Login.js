@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router';
-import { clearAuthState, login } from '../actions/auth';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+
+import { login, clearAuthState } from '../actions/auth';
 
 class Login extends Component {
   constructor(props) {
     super(props);
-    //--------uncontrolled componenet
     // this.emailInputRef = React.createRef();
     // this.passwordInputRef = React.createRef();
-    //--------Controlled component
     this.state = {
       email: '',
       password: '',
@@ -47,13 +46,14 @@ class Login extends Component {
   render() {
     const { error, inProgress, isLoggedin } = this.props.auth;
     const { from } = this.props.location.state || { from: { pathname: '/' } };
+
     if (isLoggedin) {
       return <Redirect to={from} />;
     }
     return (
       <form className="login-form">
         <span className="login-signup-header">Log In</span>
-        {error && <div className="alert error-dialog">{error}</div>}
+        {error && <div className="alert error-dailog">{error}</div>}
         <div className="field">
           <input
             type="email"
@@ -64,7 +64,6 @@ class Login extends Component {
             value={this.state.email}
           />
         </div>
-
         <div className="field">
           <input
             type="password"
@@ -75,7 +74,6 @@ class Login extends Component {
             value={this.state.password}
           />
         </div>
-
         <div className="field">
           {inProgress ? (
             <button onClick={this.handleFormSubmit} disabled={inProgress}>
@@ -97,5 +95,4 @@ function mapStateToProps(state) {
     auth: state.auth,
   };
 }
-
 export default connect(mapStateToProps)(Login);
